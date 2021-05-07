@@ -1,0 +1,3 @@
+include ':syncLauncher'
+include ':app'
+rootProject.name = "SyncLauncherDemo"
