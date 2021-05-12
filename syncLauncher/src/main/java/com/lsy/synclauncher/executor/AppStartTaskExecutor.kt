@@ -4,7 +4,7 @@ import java.util.concurrent.*
 import kotlin.math.max
 import kotlin.math.min
 
-object DispatcherExecutor {
+object AppStartTaskExecutor {
 
     //获取CPU的核处理器数
     private val CPU_COUNT = Runtime.getRuntime().availableProcessors()
@@ -39,5 +39,6 @@ object DispatcherExecutor {
     }
 
     //创建IO线程池
-    val sIOThreadPoolExecutor: ExecutorService = Executors.newCachedThreadPool(Executors.defaultThreadFactory())
+    val sIOThreadPoolExecutor: ExecutorService =
+        Executors.newCachedThreadPool(Executors.defaultThreadFactory())
 }
