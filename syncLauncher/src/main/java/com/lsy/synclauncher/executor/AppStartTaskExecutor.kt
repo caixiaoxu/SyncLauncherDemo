@@ -4,6 +4,9 @@ import java.util.concurrent.*
 import kotlin.math.max
 import kotlin.math.min
 
+/**
+ * 线程提供类
+ */
 object AppStartTaskExecutor {
 
     //获取CPU的核处理器数
@@ -26,7 +29,7 @@ object AppStartTaskExecutor {
 
     //获取对应参数，创建CPU线程池
     val sCPUThreadPoolExecutor = ThreadPoolExecutor(
-        CPU_COUNT,
+        CORE_POOL_SIZE,
         MAXIMUM_POOL_SIZE,
         KEEP_ALIVE_SECONDS,
         TimeUnit.SECONDS,
@@ -34,7 +37,6 @@ object AppStartTaskExecutor {
         Executors.defaultThreadFactory(),
         mHandler
     ).apply {
-        //获取对应参数，创建CPU线程池
         allowCoreThreadTimeOut(true)
     }
 

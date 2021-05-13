@@ -1,6 +1,7 @@
 package com.lsy.synclauncher.task
 
 import android.os.Process
+import androidx.annotation.IntRange
 import com.lsy.synclauncher.executor.AppStartTaskExecutor
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executor
@@ -24,7 +25,7 @@ abstract class AppStartTask {
     /**
      * 父任务的列表
      */
-    fun getDependsTaskList(): List<Class<out AppStartTask>>? = null
+    open fun getDependsTaskList(): List<Class<out AppStartTask>>? = null
 
     /**
      * 让当前任务进入等待状态
@@ -47,18 +48,21 @@ abstract class AppStartTask {
     /**
      * 执行线程
      */
-    fun runOnExecutor(): Executor = AppStartTaskExecutor.sIOThreadPoolExecutor
+    open fun runOnExecutor(): Executor = AppStartTaskExecutor.sIOThreadPoolExecutor
 
     /**
-     * 线程的优先级
+     * 优先级的范围，可根据Task重要程度及工作量指定；之后根据实际情况决定是否有必要放更大
      */
-    fun priority(): Int = Process.THREAD_PRIORITY_BACKGROUND
-
+    @IntRange(
+        from = Process.THREAD_PRIORITY_FOREGROUND.toLong(),
+        to = Process.THREAD_PRIORITY_LOWEST.toLong()
+    )
+    open fun priority(): Int = Process.THREAD_PRIORITY_BACKGROUND
 
     /**
      * 是否需要等待
      */
-    fun needAwait(): Boolean = true
+    open fun needWait(): Boolean = true
 
     /**
      * 是否执行在主线程
@@ -69,5 +73,4 @@ abstract class AppStartTask {
      * 执行的任务内容
      */
     abstract fun run()
-
 }
